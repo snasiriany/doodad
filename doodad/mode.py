@@ -78,11 +78,11 @@ class DockerMode(LaunchMode):
         if pre_cmd:
             cmd_list.extend(pre_cmd)
 
-        if verbose:
-            if self.gpu:
-                cmd_list.append('echo \"Running in docker (gpu)\"')
-            else:
-                cmd_list.append('echo \"Running in docker\"')
+        # if verbose:
+        #     if self.gpu:
+        #         cmd_list.append('echo \"Running in docker (gpu)\"')
+        #     else:
+        #         cmd_list.append('echo \"Running in docker\"')
         if pythonpath:
             cmd_list.append('export PYTHONPATH=$PYTHONPATH:%s' % (':'.join(pythonpath)))
         if no_root:
@@ -163,6 +163,7 @@ class SSHDocker(DockerMode):
         tmp_dir_cmd = self.credentials.get_ssh_bash_cmd(tmp_dir_cmd)
         call_and_wait(tmp_dir_cmd, dry=dry, verbose=verbose)
 
+        # print(main_cmd)
         # SCP Code over
         for mount in mount_points:
             if isinstance(mount, MountLocal):
@@ -196,6 +197,7 @@ class SSHDocker(DockerMode):
             docker_cmd = self.get_docker_cmd(main_cmd, use_tty=False, extra_args=mnt_args, pythonpath=py_path)
 
 
+        print(docker_cmd)
         remote_cmds.append(docker_cmd)
         remote_cmds.extend(remote_cleanup_commands)
 

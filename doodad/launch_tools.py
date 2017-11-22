@@ -13,7 +13,7 @@ def launch_shell(
     ):
     if mount_points is None:
         mount_points = []
-    mode.launch_command(command, dry=dry)
+    mode.launch_command(command, mount_points=mount_points, dry=dry)
 
 
 def launch_python(
